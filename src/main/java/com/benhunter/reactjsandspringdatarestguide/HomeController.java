@@ -9,6 +9,8 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String index() {
         return "index";
+        // index is the name of the template that will map to:
+        //  src/main/resources/templates/index.html
     }
 
 }
