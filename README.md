@@ -28,3 +28,7 @@ http://localhost:8080
 # Pagination
 
 `http://localhost:8080/api/employees?size=2`
+
+# SonarQube Scanning
+
+[SonarQube](SonarQube.md)
