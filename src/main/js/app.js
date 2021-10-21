@@ -1,10 +1,14 @@
 'use strict';
 
+
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
 
 import Button from '@mui/material/Button';
+import Container from "@mui/material/Container";
 
 const follow = require('./follow'); // function to hop multiple links by "rel"
 
@@ -39,9 +43,11 @@ class App extends React.Component {
                 employees: employeeCollection.entity._embedded.employees,
                 attributes: Object.keys(this.schema.properties),
                 pageSize: pageSize,
-                links: employeeCollection.entity._links});
+                links: employeeCollection.entity._links
+            });
         });
     }
+
     // end::follow-2[]
 
     // tag::create[]
@@ -64,6 +70,7 @@ class App extends React.Component {
             }
         });
     }
+
     // end::create[]
 
     // tag::delete[]
@@ -72,6 +79,7 @@ class App extends React.Component {
             this.loadFromServer(this.state.pageSize);
         });
     }
+
     // end::delete[]
 
     // tag::navigate[]
@@ -85,6 +93,7 @@ class App extends React.Component {
             });
         });
     }
+
     // end::navigate[]
 
     // tag::update-page-size[]
@@ -93,17 +102,19 @@ class App extends React.Component {
             this.loadFromServer(pageSize);
         }
     }
+
     // end::update-page-size[]
 
     // tag::follow-1[]
     componentDidMount() {
         this.loadFromServer(this.state.pageSize);
     }
+
     // end::follow-1[]
 
     render() {
         return (
-            <div>
+            <Container>
                 <CreateDialog attributes={this.state.attributes} onCreate={this.onCreate}/>
                 <EmployeeList employees={this.state.employees}
                               links={this.state.links}
@@ -111,7 +122,7 @@ class App extends React.Component {
                               onNavigate={this.onNavigate}
                               onDelete={this.onDelete}
                               updatePageSize={this.updatePageSize}/>
-            </div>
+            </Container>
         )
     }
 }
@@ -153,10 +164,10 @@ class CreateDialog extends React.Component {
                 {/*TODO convert to Modal from Material UI*/}
                 {/*<Button onClick={(event) => {*/}
                 <Button>
-                {/*    window.location = "#";*/}
-                {/*    // event.preventDefault();*/}
-                {/*}}>*/}
-                <a href="#createEmployee">Create</a>
+                    {/*    window.location = "#";*/}
+                    {/*    // event.preventDefault();*/}
+                    {/*}}>*/}
+                    <a href="#createEmployee">Create</a>
                 </Button>
 
                 <div id="createEmployee" className="modalDialog">
@@ -176,6 +187,7 @@ class CreateDialog extends React.Component {
     }
 
 }
+
 // end::create-dialog[]
 
 class EmployeeList extends React.Component {
@@ -200,10 +212,11 @@ class EmployeeList extends React.Component {
                 pageSize.substring(0, pageSize.length - 1);
         }
     }
+
     // end::handle-page-size-updates[]
 
     // tag::handle-nav[]
-    handleNavFirst(e){
+    handleNavFirst(e) {
         e.preventDefault();
         this.props.onNavigate(this.props.links.first.href);
     }
@@ -222,6 +235,7 @@ class EmployeeList extends React.Component {
         e.preventDefault();
         this.props.onNavigate(this.props.links.last.href);
     }
+
     // end::handle-nav[]
 
     // tag::employee-list-render[]
@@ -245,25 +259,27 @@ class EmployeeList extends React.Component {
         }
 
         return (
-            <div>
+            <TableContainer component={Paper}>
                 <input ref="pageSize" defaultValue={this.props.pageSize} onInput={this.handleInput}/>
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Description</th>
-                        <th></th>
-                    </tr>
-                    {employees}
-                    </tbody>
-                </table>
+                <Table sx={{ minWidth: 650 }}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>First Name</TableCell>
+                            <TableCell>Last Name</TableCell>
+                            <TableCell>Description</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {employees}
+                    </TableBody>
+                </Table>
                 <div>
                     {navLinks}
                 </div>
-            </div>
+            </TableContainer>
         )
     }
+
     // end::employee-list-render[]
 }
 
@@ -281,20 +297,21 @@ class Employee extends React.Component {
 
     render() {
         return (
-            <tr>
-                <td>{this.props.employee.firstName}</td>
-                <td>{this.props.employee.lastName}</td>
-                <td>{this.props.employee.description}</td>
-                <td>
+            <TableRow>
+                <TableCell>{this.props.employee.firstName}</TableCell>
+                <TableCell>{this.props.employee.lastName}</TableCell>
+                <TableCell>{this.props.employee.description}</TableCell>
+                <TableCell>
                     <Button variant="contained" onClick={this.handleDelete}>Delete</Button>
-                </td>
-            </tr>
+                </TableCell>
+            </TableRow>
         )
     }
 }
+
 // end::employee[]
 
 ReactDOM.render(
-    <App />,
+    <App/>,
     document.getElementById('react')
 )
