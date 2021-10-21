@@ -4,6 +4,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
 
+import Button from '@mui/material/Button';
+
 const follow = require('./follow'); // function to hop multiple links by "rel"
 
 const root = '/api';
@@ -148,7 +150,14 @@ class CreateDialog extends React.Component {
 
         return (
             <div>
+                {/*TODO convert to Modal from Material UI*/}
+                {/*<Button onClick={(event) => {*/}
+                <Button>
+                {/*    window.location = "#";*/}
+                {/*    // event.preventDefault();*/}
+                {/*}}>*/}
                 <a href="#createEmployee">Create</a>
+                </Button>
 
                 <div id="createEmployee" className="modalDialog">
                     <div>
@@ -158,7 +167,7 @@ class CreateDialog extends React.Component {
 
                         <form>
                             {inputs}
-                            <button onClick={this.handleSubmit}>Create</button>
+                            <Button variant={"contained"} onClick={this.handleSubmit}>Create</Button>
                         </form>
                     </div>
                 </div>
@@ -223,16 +232,16 @@ class EmployeeList extends React.Component {
 
         const navLinks = [];
         if ("first" in this.props.links) {
-            navLinks.push(<button key="first" onClick={this.handleNavFirst}>&lt;&lt;</button>);
+            navLinks.push(<Button variant="outlined" key="first" onClick={this.handleNavFirst}>&lt;&lt;</Button>);
         }
         if ("prev" in this.props.links) {
-            navLinks.push(<button key="prev" onClick={this.handleNavPrev}>&lt;</button>);
+            navLinks.push(<Button variant="outlined" key="prev" onClick={this.handleNavPrev}>&lt;</Button>);
         }
         if ("next" in this.props.links) {
-            navLinks.push(<button key="next" onClick={this.handleNavNext}>&gt;</button>);
+            navLinks.push(<Button variant="outlined" key="next" onClick={this.handleNavNext}>&gt;</Button>);
         }
         if ("last" in this.props.links) {
-            navLinks.push(<button key="last" onClick={this.handleNavLast}>&gt;&gt;</button>);
+            navLinks.push(<Button variant="outlined" key="last" onClick={this.handleNavLast}>&gt;&gt;</Button>);
         }
 
         return (
@@ -277,7 +286,7 @@ class Employee extends React.Component {
                 <td>{this.props.employee.lastName}</td>
                 <td>{this.props.employee.description}</td>
                 <td>
-                    <button onClick={this.handleDelete}>Delete</button>
+                    <Button variant="contained" onClick={this.handleDelete}>Delete</Button>
                 </td>
             </tr>
         )
